@@ -1,0 +1,11 @@
+require 'socket'
+target = 'localhost'
+ports = [20, 21, 22, 23, 25, 80, 443]
+ports.each do |port|
+  begin
+    Socket.tcp(target, port, connect_timeout: 10) {}
+    puts "Port #{port} is open on #{target}"
+  rescue Errno::ETIMEDOUT
+    puts "Port #{port} is closed on #{target}"
+  end
+end
